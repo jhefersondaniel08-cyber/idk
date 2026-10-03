@@ -1,19 +1,17 @@
-let list: number[] = []
 scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile0`, function (sprite, location) {
     game.gameOver(false)
     game.setGameOverEffect(false, effects.dissolve)
 })
 controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
     if (Prota.vy == 0) {
-        Prota.vy = -130
+        Prota.vy = -150
     }
 })
 sprites.onOverlap(SpriteKind.Player, SpriteKind.Food, function (sprite, otherSprite) {
-    let fresa: Sprite = null
-    info.changeScoreBy(1)
-    sprites.destroy(fresa)
+    info.changeScoreBy(10)
+    sprites.destroy(otherSprite)
 })
-let value: Sprite = null
+let mySprite: Sprite = null
 let Prota: Sprite = null
 scene.setBackgroundColor(15)
 Prota = sprites.create(img`
@@ -86,10 +84,10 @@ controller.moveSprite(Prota, 100, 0)
 tiles.setCurrentTilemap(tilemap`level1`)
 Prota.ay = 200
 scene.cameraFollowSprite(Prota)
-tiles.placeOnTile(Prota, tiles.getTileLocation(6, 10))
+tiles.placeOnTile(Prota, tiles.getTileLocation(4, 17))
 info.setLife(5)
 for (let fresa of tiles.getTilesByType(assets.tile`myTile3`)) {
-    value = sprites.create(img`
+    mySprite = sprites.create(img`
         . . . . . . . f . . . . . . . . 
         . . . . . . f 7 f . . . . . . . 
         . . . . . f f f 7 f f f . . . . 
@@ -108,7 +106,7 @@ for (let fresa of tiles.getTilesByType(assets.tile`myTile3`)) {
         . . . . . . . . . . . . . . . . 
         `, SpriteKind.Food)
     animation.runImageAnimation(
-    fresa,
+    mySprite,
     [img`
         . . . . . . . f . . . . . . . . 
         . . . . . . f 7 f . . . . . . . 
@@ -198,9 +196,9 @@ for (let fresa of tiles.getTilesByType(assets.tile`myTile3`)) {
     200,
     true
     )
-    tiles.placeOnTile(fresa, value)
-    tiles.setTileAt(value, assets.tile`transparency16`)
+    tiles.placeOnTile(mySprite, fresa)
+    tiles.setTileAt(fresa, assets.tile`transparency16`)
 }
-for (let value_2 of list) {
+for (let value_2 of tiles.getTilesByType(assets.tile`myTile4`)) {
 	
 }
